@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="print.xml"/>
+    <import resource="stats.xml"/>
+
+    <context:property-placeholder location="config.properties"/>
+
+    <bean id="jda_builder"
+          class="net.dv8tion.jda.api.JDABuilder"
+          factory-method="createDefault">
+        <constructor-arg value="${secret}"/>
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="jda_builder"/>
+        <property name="targetMethod" value="addEventListeners"/>
+        <property name="arguments" ref="print.event_listener"/>
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="jda_builder"/>
+        <property name="targetMethod" value="addEventListeners"/>
+        <property name="arguments" ref="stats.event_listener"/>
+    </bean>
+
+</beans>

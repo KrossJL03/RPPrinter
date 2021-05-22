@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- FORMAT -->
+    <bean id="format.html.format"
+          class="bot.format.Format"
+          factory-method="html"/>
+
+    <!-- PARAGRAPH FORMATTER -->
+    <bean id="format.html.paragraph_formatter"
+          class="bot.format.ParagraphFormatter">
+        <constructor-arg value="&lt;p&gt;"/>
+        <constructor-arg value="&lt;/p&gt;"/>
+    </bean>
+
+    <!-- REPLACEABLE STYlE TRACKERS -->
+    <bean id="format.html.replaceable_style_tracker.bold_italic"
+          class="bot.format.ReplaceableStyleTracker">
+        <constructor-arg ref="format.html.style.bold_italic"/>
+        <constructor-arg value="&lt;b&gt;&lt;i&gt;"/>
+        <constructor-arg value="&lt;/i&gt;&lt;/b&gt;"/>
+    </bean>
+    <bean id="format.html.replaceable_style_tracker.bold"
+          class="bot.format.ReplaceableStyleTracker">
+        <constructor-arg ref="format.html.style.bold"/>
+        <constructor-arg value="&lt;b&gt;"/>
+        <constructor-arg value="&lt;/b&gt;"/>
+    </bean>
+    <bean id="format.html.replaceable_style_tracker.italic"
+          class="bot.format.ReplaceableStyleTracker">
+        <constructor-arg ref="format.html.style.italic"/>
+        <constructor-arg value="&lt;i&gt;"/>
+        <constructor-arg value="&lt;/i&gt;"/>
+    </bean>
+
+    <!-- STYLES -->
+    <bean id="format.html.style.censored"
+          class="bot.format.Style">
+        <constructor-arg value="&#x7c;&#x7c;"/>
+        <constructor-arg value="&#x5c;&#x7c;&#x5c;&#x7c;"/>
+    </bean>
+    <bean id="format.html.style.code_span"
+          class="bot.format.Style">
+        <constructor-arg value="&#x60;"/>
+        <constructor-arg value="&#x5c;&#x60;"/>
+    </bean>
+    <bean id="format.html.style.bold_italic"
+          class="bot.format.Style">
+        <constructor-arg value="&#x2a;&#x2a;&#x2a;"/>
+        <constructor-arg value="&#x5c;&#x2a;&#x5c;&#x2a;&#x5c;&#x2a;"/>
+    </bean>
+    <bean id="format.html.style.bold"
+          class="bot.format.Style">
+        <constructor-arg value="&#x2a;&#x2a;"/>
+        <constructor-arg value="&#x5c;&#x2a;&#x5c;&#x2a;"/>
+    </bean>
+    <bean id="format.html.style.italic"
+          class="bot.format.Style">
+        <constructor-arg value="&#x2a;"/>
+        <constructor-arg value="&#x5c;&#x2a;"/>
+    </bean>
+
+    <!-- TEXT REPLACERS -->
+    <bean id="format.html.text_replacer.newline" class="bot.format.TextReplacer">
+        <constructor-arg value="\r&#xA;"/>
+        <constructor-arg value="&#xA;"/>
+    </bean>
+    <bean id="format.html.text_replacer.multiple_spaces" class="bot.format.TextReplacer">
+        <constructor-arg value="/  +/g"/>
+        <constructor-arg value=" "/>
+    </bean>
+
+</beans>

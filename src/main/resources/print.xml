@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="format-html-censored.xml"/>
+    <import resource="format-html-full.xml"/>
+    <import resource="group.xml"/>
+
+    <context:property-placeholder location="config.properties"/>
+
+    <bean id="print.event_listener"
+          class="bot.EventListener">
+        <constructor-arg ref="print.event_handler"/>
+    </bean>
+
+    <bean id="print.event_handler"
+          class="bot.print.PrintEventHandler">
+        <constructor-arg value="${command.print}"/>
+        <constructor-arg>
+            <list>
+                <ref bean="format.html.full.turn_formatter"/>
+                <ref bean="format.html.censored.turn_formatter"/>
+            </list>
+        </constructor-arg>
+        <constructor-arg ref="print.file_sender"/>
+        <constructor-arg ref="group.grouped_message_retriever"/>
+    </bean>
+
+    <bean id="print.file_sender"
+          class="bot.print.FileSender"/>
+</beans>

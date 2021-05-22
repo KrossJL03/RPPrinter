@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="format-html.xml"/>
+
+    <!-- TURN FORMATTER -->
+    <bean id="format.html.full.turn_formatter"
+          class="bot.format.TurnFormatter">
+        <constructor-arg value="full"/>
+        <constructor-arg ref="format.html.format"/>
+        <constructor-arg ref="format.html.full.text_censorer"/>
+        <constructor-arg ref="format.html.full.text_formatter"/>
+        <constructor-arg value="&#xA;&lt;hr/&gt;&#xA;"/>
+        <constructor-arg ref="format.html.full.text_cleaner"/>
+    </bean>
+
+    <!-- TEXT CENSORER -->
+    <bean id="format.html.full.text_censorer"
+          class="bot.format.TextCensorer">
+        <constructor-arg>
+            <list>
+                <ref bean="format.html.censored.style_tracker.code_span"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- TEXT FORMATTER -->
+    <bean id="format.html.full.text_formatter"
+          class="bot.format.TextFormatter">
+        <constructor-arg>
+            <list>
+                <ref bean="format.html.replaceable_style_tracker.bold_italic"/>
+                <ref bean="format.html.replaceable_style_tracker.bold"/>
+                <ref bean="format.html.replaceable_style_tracker.italic"/>
+            </list>
+        </constructor-arg>
+        <constructor-arg ref="format.html.paragraph_formatter"/>
+    </bean>
+
+    <!-- TEXT CLEANER -->
+    <bean id="format.html.full.text_cleaner" class="bot.format.TextCleaner">
+        <constructor-arg>
+            <list>
+                <ref bean="format.html.text_replacer.newline"/>
+                <ref bean="format.html.full.text_replacer.censor"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- TEXT REPLACERS -->
+    <bean id="format.html.full.text_replacer.censor" class="bot.format.TextReplacer">
+        <constructor-arg value="&#x5c;&#x7c;&#x5c;&#x7c;"/>
+        <constructor-arg value=""/>
+    </bean>
+
+    <!-- STYLE TRACKER -->
+    <bean id="format.html.censored.style_tracker.code_span"
+          class="bot.format.StyleTracker">
+        <constructor-arg ref="format.html.style.code_span"/>
+    </bean>
+</beans>

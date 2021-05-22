@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <import resource="format-raw-censored.xml"/>
+    <import resource="format-raw-full.xml"/>
+    <import resource="group.xml"/>
+
+    <context:property-placeholder location="config.properties"/>
+
+    <bean id="stats.event_listener"
+          class="bot.EventListener">
+        <constructor-arg ref="stats.event_handler"/>
+    </bean>
+
+    <bean id="stats.event_handler"
+          class="bot.stats.StatsEventHandler">
+        <constructor-arg value="${command.stats}"/>
+        <constructor-arg>
+            <list>
+                <ref bean="stats.stats_calculator.full"/>
+                <ref bean="stats.stats_calculator.censored"/>
+            </list>
+        </constructor-arg>
+        <constructor-arg ref="group.grouped_message_retriever"/>
+    </bean>
+
+    <!-- STATS CALCULATORS -->
+    <bean id="stats.stats_calculator.censored" class="bot.stats.StatsCalculator">
+        <constructor-arg ref="format.raw.censored.turn_formatter"/>
+    </bean>
+    <bean id="stats.stats_calculator.full" class="bot.stats.StatsCalculator">
+        <constructor-arg ref="format.raw.full.turn_formatter"/>
+    </bean>
+</beans>

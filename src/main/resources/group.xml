@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd
+                http://www.springframework.org/schema/context
+                http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:property-placeholder location="config.properties"/>
+
+    <bean id="group.grouped_message_retriever"
+          class="bot.group.GroupedMessageRetriever">
+        <constructor-arg ref="group.channel_history_retriever"/>
+        <constructor-arg ref="group.message_grouper"/>
+        <constructor-arg ref="group.message_list_cleaner"/>
+    </bean>
+
+    <bean id="group.channel_history_retriever"
+          class="bot.group.ChannelHistoryRetriever"/>
+
+    <bean id="group.message_grouper"
+          class="bot.group.MessageGrouper"/>
+
+    <bean id="group.message_list_cleaner"
+          class="bot.group.MessageListCleaner">
+        <constructor-arg>
+            <list>
+                <value>${command.print}</value>
+                <value>${command.stats}</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+</beans>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- FORMAT -->
+    <bean id="format.raw.format"
+          class="bot.format.Format"
+          factory-method="raw"/>
+
+    <!-- PARAGRAPH FORMATTER -->
+    <bean id="format.raw.paragraph_formatter"
+          class="bot.format.ParagraphFormatter">
+        <constructor-arg value=""/>
+        <constructor-arg value=""/>
+    </bean>
+
+    <!-- STYLES -->
+    <bean id="format.raw.style.censored"
+          class="bot.format.Style">
+        <constructor-arg value="&#x7c;&#x7c;"/>
+        <constructor-arg value="&#x5c;&#x7c;&#x5c;&#x7c;"/>
+    </bean>
+
+    <!-- TEXT REPLACERS -->
+    <bean id="format.raw.text_replacer.period" class="bot.format.TextReplacer">
+        <constructor-arg value="&#x5c;&#x2e;"/>
+        <constructor-arg value=" "/>
+    </bean>
+    <bean id="format.raw.text_replacer.comma" class="bot.format.TextReplacer">
+        <constructor-arg value="&#x5c;&#x2c;"/>
+        <constructor-arg value=" "/>
+    </bean>
+    <bean id="format.raw.text_replacer.quote" class="bot.format.TextReplacer">
+        <constructor-arg value="&#x5c;&quot;"/>
+        <constructor-arg value=" "/>
+    </bean>
+    <bean id="format.raw.text_replacer.left_quote" class="bot.format.TextReplacer">
+        <constructor-arg value="&#x5c;&#x201C;"/>
+        <constructor-arg value=" "/>
+    </bean>
+    <bean id="format.raw.text_replacer.right_quote" class="bot.format.TextReplacer">
+        <constructor-arg value="&#x5c;&#x201D;"/>
+        <constructor-arg value=" "/>
+    </bean>
+    <bean id="format.raw.text_replacer.star" class="bot.format.TextReplacer">
+        <constructor-arg value="&#x5c;&#x2a;"/>
+        <constructor-arg value=" "/>
+    </bean>
+    <bean id="format.raw.text_replacer.multiple_spaces" class="bot.format.TextReplacer">
+        <constructor-arg value="\s+"/>
+        <constructor-arg value=" "/>
+    </bean>
+
+</beans>

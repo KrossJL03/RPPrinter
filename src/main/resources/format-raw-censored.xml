@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+                http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="format-raw.xml"/>
+
+    <!-- TURN FORMATTER -->
+    <bean id="format.raw.censored.turn_formatter"
+          class="bot.format.TurnFormatter">
+        <constructor-arg value="censored"/>
+        <constructor-arg ref="format.raw.format"/>
+        <constructor-arg ref="format.raw.censored.text_censorer"/>
+        <constructor-arg ref="format.raw.censored.text_formatter"/>
+        <constructor-arg value=" "/>
+        <constructor-arg ref="format.raw.censored.text_cleaner"/>
+    </bean>
+
+    <!-- TEXT CENSORER -->
+    <bean id="format.raw.censored.text_censorer"
+          class="bot.format.TextCensorer">
+        <constructor-arg>
+            <list>
+                <ref bean="format.raw.censored.style_tracker.censored"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- TEXT FORMATTER -->
+    <bean id="format.raw.censored.text_formatter"
+          class="bot.format.TextFormatter">
+        <constructor-arg>
+            <list/>
+        </constructor-arg>
+        <constructor-arg ref="format.raw.paragraph_formatter"/>
+    </bean>
+
+    <!-- TEXT CLEANER -->
+    <bean id="format.raw.censored.text_cleaner" class="bot.format.TextCleaner">
+        <constructor-arg>
+            <list>
+                <ref bean="format.raw.censored.text_replacer.code_span"/>
+                <ref bean="format.raw.text_replacer.period"/>
+                <ref bean="format.raw.text_replacer.comma"/>
+                <ref bean="format.raw.text_replacer.quote"/>
+                <ref bean="format.raw.text_replacer.left_quote"/>
+                <ref bean="format.raw.text_replacer.right_quote"/>
+                <ref bean="format.raw.text_replacer.star"/>
+                <ref bean="format.raw.text_replacer.multiple_spaces"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <!-- TEXT REPLACERS -->
+    <bean id="format.raw.censored.text_replacer.code_span" class="bot.format.TextReplacer">
+        <constructor-arg value="&#x5c;&#x60;"/>
+        <constructor-arg value=" "/>
+    </bean>
+
+    <!-- STYLE TRACKER -->
+    <bean id="format.raw.censored.style_tracker.censored"
+          class="bot.format.StyleTracker">
+        <constructor-arg ref="format.raw.style.censored"/>
+    </bean>
+</beans>
