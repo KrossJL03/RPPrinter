@@ -3,6 +3,7 @@ package bot.group;
 import bot.Turn;
 import net.dv8tion.jda.api.entities.Message;
 
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -19,8 +20,9 @@ class MessageGrouper
 
     List<Turn> group(List<Message> messageList)
     {
-        List<Turn>    groupedMessageList = new ArrayList<>();
-        StringBuilder stringBuilder      = new StringBuilder();
+        List<Turn>     groupedMessageList = new ArrayList<>();
+        StringBuilder  stringBuilder      = new StringBuilder();
+        OffsetDateTime postedAt           = null;
         Queue<Message> messageQueue = new LinkedList<Message>()
         {
             {
@@ -32,6 +34,10 @@ class MessageGrouper
             Message message = messageQueue.poll();
             assert message != null;
 
+            if (postedAt == null) {
+                postedAt = message.getTimeCreated();
+            }
+
             if (stringBuilder.length() != 0) {
                 stringBuilder.append(System.getProperty("line.separator"));
                 stringBuilder.append(System.getProperty("line.separator"));
@@ -39,9 +45,10 @@ class MessageGrouper
             stringBuilder.append(message.getContentRaw());
 
             if (stringBuilder.length() > 0 && (messageQueue.isEmpty() || !isSameAuthor(message, messageQueue.peek()))) {
-                groupedMessageList.add(new GroupedMessage(stringBuilder.toString()));
+                groupedMessageList.add(new GroupedMessage(stringBuilder.toString(), postedAt));
 
                 stringBuilder = new StringBuilder();
+                postedAt = null;
             }
 
         } while (!messageQueue.isEmpty());

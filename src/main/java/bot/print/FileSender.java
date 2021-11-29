@@ -2,6 +2,7 @@ package bot.print;
 
 import bot.FormattedContent;
 import net.dv8tion.jda.api.entities.MessageChannel;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
 import java.io.IOException;
@@ -11,9 +12,9 @@ import java.io.IOException;
  */
 class FileSender
 {
-    void write(MessageChannel channel, FormattedContent content) throws IOException
+    void write(MessageChannel channel, FormattedContent content, DateRange dateRange) throws IOException
     {
-        String fileName = channel.getName() + "-" + content.getIdentifier() + "." + content.getFormat();
+        String fileName = buildFileName(channel, content, dateRange);
 
         File file = new File(fileName);
         file.createNewFile();
@@ -25,5 +26,17 @@ class FileSender
         channel.sendFile(file).queue();
 
         file.delete();
+    }
+
+    @NotNull
+    private String buildFileName(MessageChannel channel, FormattedContent content, DateRange dateRange)
+    {
+        return String.format(
+            "%s-%s-%s.%s",
+            channel.getName(),
+            content.getIdentifier(),
+            dateRange.getLocalEndedAt(),
+            content.getFormat()
+        );
     }
 }

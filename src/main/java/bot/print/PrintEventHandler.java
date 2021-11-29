@@ -30,11 +30,20 @@ class PrintEventHandler extends EventHandler
 
     public void handle(MessageReceivedEvent event) throws IOException
     {
-        MessageChannel channel  = event.getChannel();
-        List<Turn>     turnList = retrieveTurns(event);
+        MessageChannel channel   = event.getChannel();
+        List<Turn>     turnList  = retrieveTurns(event);
+        DateRange      dateRange = buildDateRange(turnList);
 
         for (TurnFormatter formatter : formatterList) {
-            fileSender.write(channel, formatter.format(turnList));
+            fileSender.write(channel, formatter.format(turnList), dateRange);
         }
+    }
+
+    private DateRange buildDateRange(List<Turn> turnList)
+    {
+        Turn firstTurn = turnList.get(0);
+        Turn lastTurn  = turnList.get(turnList.size() - 1);
+
+        return new DateRange(firstTurn.getPostedAt(), lastTurn.getPostedAt());
     }
 }
