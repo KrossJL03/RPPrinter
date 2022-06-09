@@ -18,14 +18,9 @@ class DateRange
     public String toString()
     {
         return String.format(
-            "[%s to %s]",
+            "%s-to-%s",
             startedAt.format(DateTimeFormatter.ISO_LOCAL_DATE),
-            getLocalEndedAt()
+            endedAt.format(DateTimeFormatter.ISO_LOCAL_DATE)
         );
-    }
-
-    String getLocalEndedAt()
-    {
-        return endedAt.format(DateTimeFormatter.ISO_LOCAL_DATE);
     }
 }

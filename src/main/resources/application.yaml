@@ -1,5 +1,6 @@
 command:
-  print: "/rp-print"
-  stats: "/rp-stats"
+  print: "rp-print"
+  printNew: "rp-print-new"
+  stats: "rp-stats"
 
 secret: ""

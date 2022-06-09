@@ -9,26 +9,28 @@ import java.util.List;
 
 public class GroupedMessageRetriever implements TurnRetriever
 {
-    private ChannelHistoryRetriever channelHistoryRetriever;
-    private MessageGrouper          messageGrouper;
-    private MessageListCleaner      messageListCleaner;
+    private ChannelHistoryRetriever  channelHistoryRetriever;
+    private MessageGrouper           messageGrouper;
+    private List<MessageListCleaner> messageListCleanerList;
 
     GroupedMessageRetriever(
         ChannelHistoryRetriever channelHistoryRetriever,
         MessageGrouper messageGrouper,
-        MessageListCleaner messageListCleaner
+        List<MessageListCleaner> messageListCleanerList
     )
     {
         this.channelHistoryRetriever = channelHistoryRetriever;
         this.messageGrouper = messageGrouper;
-        this.messageListCleaner = messageListCleaner;
+        this.messageListCleanerList = messageListCleanerList;
     }
 
     public List<Turn> retrieve(MessageChannel channel)
     {
-        List<Message> channelHistory   = channelHistoryRetriever.retrieve(channel);
-        List<Message> cleanMessageList = messageListCleaner.clean(channelHistory);
+        List<Message> messageList = channelHistoryRetriever.retrieve(channel);
+        for (MessageListCleaner cleaner : messageListCleanerList) {
+            messageList = cleaner.clean(messageList);
+        }
 
-        return messageGrouper.group(cleanMessageList);
+        return messageGrouper.group(messageList);
     }
 }

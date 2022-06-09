@@ -35,7 +35,7 @@ class FileSender
             "%s-%s-%s.%s",
             channel.getName(),
             content.getIdentifier(),
-            dateRange.getLocalEndedAt(),
+            dateRange.toString(),
             content.getFormat()
         );
     }

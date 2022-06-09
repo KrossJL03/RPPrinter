@@ -8,9 +8,9 @@
     <import resource="format-html.xml"/>
 
     <!-- TURN FORMATTER -->
-    <bean id="format.html.full.turn_formatter"
+    <bean id="format.html.not_censored.turn_formatter"
           class="bot.format.TurnFormatter">
-        <constructor-arg value="full"/>
+        <constructor-arg value="not-censored"/>
         <constructor-arg ref="format.html.format"/>
         <constructor-arg ref="format.html.full.text_censorer"/>
         <constructor-arg ref="format.html.full.text_formatter"/>

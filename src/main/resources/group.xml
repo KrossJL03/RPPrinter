@@ -10,11 +10,27 @@
 
     <context:property-placeholder location="config.properties"/>
 
-    <bean id="group.grouped_message_retriever"
+    <bean id="group.grouped_message_retriever.all"
           class="bot.group.GroupedMessageRetriever">
         <constructor-arg ref="group.channel_history_retriever"/>
         <constructor-arg ref="group.message_grouper"/>
-        <constructor-arg ref="group.message_list_cleaner"/>
+        <constructor-arg>
+            <list>
+                <ref bean="group.message_list_cleaner.bot_command"/>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="group.grouped_message_retriever.new"
+          class="bot.group.GroupedMessageRetriever">
+        <constructor-arg ref="group.channel_history_retriever"/>
+        <constructor-arg ref="group.message_grouper"/>
+        <constructor-arg>
+            <list>
+                <ref bean="group.message_list_cleaner.already_printed"/>
+                <ref bean="group.message_list_cleaner.bot_command"/>
+            </list>
+        </constructor-arg>
     </bean>
 
     <bean id="group.channel_history_retriever"
@@ -23,11 +39,22 @@
     <bean id="group.message_grouper"
           class="bot.group.MessageGrouper"/>
 
-    <bean id="group.message_list_cleaner"
-          class="bot.group.MessageListCleaner">
+    <bean id="group.message_list_cleaner.already_printed"
+          class="bot.group.AlreadyPrintedMessageCleaner">
         <constructor-arg>
             <list>
                 <value>${command.print}</value>
+                <value>${command.printNew}</value>
+            </list>
+        </constructor-arg>
+    </bean>
+
+    <bean id="group.message_list_cleaner.bot_command"
+          class="bot.group.BotCommandCleaner">
+        <constructor-arg>
+            <list>
+                <value>${command.print}</value>
+                <value>${command.printNew}</value>
                 <value>${command.stats}</value>
             </list>
         </constructor-arg>

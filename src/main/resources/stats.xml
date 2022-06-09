@@ -28,7 +28,7 @@
                 <ref bean="stats.stats_calculator.censored"/>
             </list>
         </constructor-arg>
-        <constructor-arg ref="group.grouped_message_retriever"/>
+        <constructor-arg ref="group.grouped_message_retriever.all"/>
     </bean>
 
     <!-- STATS CALCULATORS -->

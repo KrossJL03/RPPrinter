@@ -19,17 +19,35 @@
         <constructor-arg ref="print.event_handler"/>
     </bean>
 
+    <bean id="printNew.event_listener"
+          class="bot.EventListener">
+        <constructor-arg ref="printNew.event_handler"/>
+    </bean>
+
     <bean id="print.event_handler"
           class="bot.print.PrintEventHandler">
         <constructor-arg value="${command.print}"/>
         <constructor-arg>
             <list>
-                <ref bean="format.html.full.turn_formatter"/>
+                <ref bean="format.html.not_censored.turn_formatter"/>
                 <ref bean="format.html.censored.turn_formatter"/>
             </list>
         </constructor-arg>
         <constructor-arg ref="print.file_sender"/>
-        <constructor-arg ref="group.grouped_message_retriever"/>
+        <constructor-arg ref="group.grouped_message_retriever.all"/>
+    </bean>
+
+    <bean id="printNew.event_handler"
+          class="bot.print.PrintEventHandler">
+        <constructor-arg value="${command.printNew}"/>
+        <constructor-arg>
+            <list>
+                <ref bean="format.html.not_censored.turn_formatter"/>
+                <ref bean="format.html.censored.turn_formatter"/>
+            </list>
+        </constructor-arg>
+        <constructor-arg ref="print.file_sender"/>
+        <constructor-arg ref="group.grouped_message_retriever.new"/>
     </bean>
 
     <bean id="print.file_sender"

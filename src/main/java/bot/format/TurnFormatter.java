@@ -19,7 +19,8 @@ class TurnFormatter implements bot.TurnFormatter
 
     TurnFormatter(
         String identifier,
-        Format format, TextCensorer textCensorer,
+        Format format,
+        TextCensorer textCensorer,
         TextFormatter textFormatter,
         String turnBreak,
         TextCleaner textCleaner
