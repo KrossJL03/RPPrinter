@@ -13,7 +13,7 @@ class TextFormatter
         this.paragraphFormatter = paragraphFormatter;
     }
 
-    String format(String text)
+    String formatMessage(String text)
     {
         clearTrackers();
 

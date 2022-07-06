@@ -49,6 +49,10 @@
         <constructor-arg value="&#x5c;&#x2a;"/>
         <constructor-arg value=" "/>
     </bean>
+    <bean id="format.raw.text_replacer.user_tag" class="bot.format.TextReplacer">
+        <constructor-arg value="&#x3c;&#x40;&#x5c;d&#x2b;&#x3e;"/>
+        <constructor-arg value=" "/>
+    </bean>
     <bean id="format.raw.text_replacer.multiple_spaces" class="bot.format.TextReplacer">
         <constructor-arg value="\s+"/>
         <constructor-arg value=" "/>

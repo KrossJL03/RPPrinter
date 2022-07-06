@@ -9,7 +9,7 @@
                 http://www.springframework.org/schema/context/spring-context.xsd">
 
     <import resource="format-raw-censored.xml"/>
-    <import resource="format-raw-full.xml"/>
+    <import resource="format-raw-not-censored.xml"/>
     <import resource="group.xml"/>
 
     <context:property-placeholder location="config.properties"/>
@@ -24,7 +24,7 @@
         <constructor-arg value="${command.stats}"/>
         <constructor-arg>
             <list>
-                <ref bean="stats.stats_calculator.full"/>
+                <ref bean="stats.stats_calculator.not_censored"/>
                 <ref bean="stats.stats_calculator.censored"/>
             </list>
         </constructor-arg>
@@ -35,7 +35,7 @@
     <bean id="stats.stats_calculator.censored" class="bot.stats.StatsCalculator">
         <constructor-arg ref="format.raw.censored.turn_formatter"/>
     </bean>
-    <bean id="stats.stats_calculator.full" class="bot.stats.StatsCalculator">
-        <constructor-arg ref="format.raw.full.turn_formatter"/>
+    <bean id="stats.stats_calculator.not_censored" class="bot.stats.StatsCalculator">
+        <constructor-arg ref="format.raw.not_censored.turn_formatter"/>
     </bean>
 </beans>

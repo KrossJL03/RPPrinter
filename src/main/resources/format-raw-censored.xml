@@ -16,7 +16,11 @@
         <constructor-arg ref="format.raw.censored.text_formatter"/>
         <constructor-arg value=" "/>
         <constructor-arg ref="format.raw.censored.text_cleaner"/>
+        <constructor-arg ref="format.raw.censored.header_generator.null"/>
     </bean>
+
+    <!-- HEADER GENERATORS -->
+    <bean id="format.raw.censored.header_generator.null" class="bot.format.NullHeaderGenerator"/>
 
     <!-- TEXT CENSORER -->
     <bean id="format.raw.censored.text_censorer"
@@ -48,6 +52,7 @@
                 <ref bean="format.raw.text_replacer.left_quote"/>
                 <ref bean="format.raw.text_replacer.right_quote"/>
                 <ref bean="format.raw.text_replacer.star"/>
+                <ref bean="format.raw.text_replacer.user_tag"/>
                 <ref bean="format.raw.text_replacer.multiple_spaces"/>
             </list>
         </constructor-arg>

@@ -4,7 +4,9 @@ import java.time.OffsetDateTime;
 
 public interface Turn
 {
-    OffsetDateTime getPostedAt();
+    String getAuthor();
 
-    String toString();
+    String getMessage();
+
+    OffsetDateTime getPostedAt();
 }

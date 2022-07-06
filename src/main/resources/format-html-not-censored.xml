@@ -8,18 +8,34 @@
     <import resource="format-html.xml"/>
 
     <!-- TURN FORMATTER -->
-    <bean id="format.html.not_censored.turn_formatter"
+    <bean id="format.html.not_censored.turn_formatter.author_date_header"
           class="bot.format.TurnFormatter">
         <constructor-arg value="not-censored"/>
         <constructor-arg ref="format.html.format"/>
-        <constructor-arg ref="format.html.full.text_censorer"/>
-        <constructor-arg ref="format.html.full.text_formatter"/>
+        <constructor-arg ref="format.html.not_censored.text_censorer"/>
+        <constructor-arg ref="format.html.not_censored.text_formatter"/>
         <constructor-arg value="&#xA;&lt;hr/&gt;&#xA;"/>
-        <constructor-arg ref="format.html.full.text_cleaner"/>
+        <constructor-arg ref="format.html.not_censored.text_cleaner"/>
+        <constructor-arg ref="format.html.censored.header_generator.author_date"/>
     </bean>
 
+    <bean id="format.html.not_censored.turn_formatter.null_header"
+          class="bot.format.TurnFormatter">
+        <constructor-arg value="not-censored"/>
+        <constructor-arg ref="format.html.format"/>
+        <constructor-arg ref="format.html.not_censored.text_censorer"/>
+        <constructor-arg ref="format.html.not_censored.text_formatter"/>
+        <constructor-arg value="&#xA;&lt;hr/&gt;&#xA;"/>
+        <constructor-arg ref="format.html.not_censored.text_cleaner"/>
+        <constructor-arg ref="format.html.censored.header_generator.null"/>
+    </bean>
+
+    <!-- HEADER GENERATORS -->
+    <bean id="format.html.censored.header_generator.author_date" class="bot.format.AuthorDateHeaderGenerator"/>
+    <bean id="format.html.censored.header_generator.null" class="bot.format.NullHeaderGenerator"/>
+
     <!-- TEXT CENSORER -->
-    <bean id="format.html.full.text_censorer"
+    <bean id="format.html.not_censored.text_censorer"
           class="bot.format.TextCensorer">
         <constructor-arg>
             <list>
@@ -29,7 +45,7 @@
     </bean>
 
     <!-- TEXT FORMATTER -->
-    <bean id="format.html.full.text_formatter"
+    <bean id="format.html.not_censored.text_formatter"
           class="bot.format.TextFormatter">
         <constructor-arg>
             <list>
@@ -42,17 +58,19 @@
     </bean>
 
     <!-- TEXT CLEANER -->
-    <bean id="format.html.full.text_cleaner" class="bot.format.TextCleaner">
+    <bean id="format.html.not_censored.text_cleaner" class="bot.format.TextCleaner">
         <constructor-arg>
             <list>
                 <ref bean="format.html.text_replacer.newline"/>
-                <ref bean="format.html.full.text_replacer.censor"/>
+                <ref bean="format.html.not_censored.text_replacer.censor"/>
+                <ref bean="format.html.text_replacer.user_tag"/>
+                <ref bean="format.html.text_replacer.multiple_spaces"/>
             </list>
         </constructor-arg>
     </bean>
 
     <!-- TEXT REPLACERS -->
-    <bean id="format.html.full.text_replacer.censor" class="bot.format.TextReplacer">
+    <bean id="format.html.not_censored.text_replacer.censor" class="bot.format.TextReplacer">
         <constructor-arg value="&#x5c;&#x7c;&#x5c;&#x7c;"/>
         <constructor-arg value=""/>
     </bean>

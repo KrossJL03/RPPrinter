@@ -9,7 +9,7 @@
                 http://www.springframework.org/schema/context/spring-context.xsd">
 
     <import resource="format-html-censored.xml"/>
-    <import resource="format-html-full.xml"/>
+    <import resource="format-html-not-censored.xml"/>
     <import resource="group.xml"/>
 
     <context:property-placeholder location="config.properties"/>
@@ -24,13 +24,23 @@
         <constructor-arg ref="printNew.event_handler"/>
     </bean>
 
+    <bean id="printDetail.event_listener"
+          class="bot.EventListener">
+        <constructor-arg ref="printDetail.event_handler"/>
+    </bean>
+
+    <bean id="printDetailNew.event_listener"
+          class="bot.EventListener">
+        <constructor-arg ref="printDetailNew.event_handler"/>
+    </bean>
+
     <bean id="print.event_handler"
           class="bot.print.PrintEventHandler">
         <constructor-arg value="${command.print}"/>
         <constructor-arg>
             <list>
-                <ref bean="format.html.not_censored.turn_formatter"/>
-                <ref bean="format.html.censored.turn_formatter"/>
+                <ref bean="format.html.not_censored.turn_formatter.null_header"/>
+                <ref bean="format.html.censored.turn_formatter.null_header"/>
             </list>
         </constructor-arg>
         <constructor-arg ref="print.file_sender"/>
@@ -42,8 +52,34 @@
         <constructor-arg value="${command.printNew}"/>
         <constructor-arg>
             <list>
-                <ref bean="format.html.not_censored.turn_formatter"/>
-                <ref bean="format.html.censored.turn_formatter"/>
+                <ref bean="format.html.not_censored.turn_formatter.null_header"/>
+                <ref bean="format.html.censored.turn_formatter.null_header"/>
+            </list>
+        </constructor-arg>
+        <constructor-arg ref="print.file_sender"/>
+        <constructor-arg ref="group.grouped_message_retriever.new"/>
+    </bean>
+
+    <bean id="printDetail.event_handler"
+          class="bot.print.PrintEventHandler">
+        <constructor-arg value="${command.printDetail}"/>
+        <constructor-arg>
+            <list>
+                <ref bean="format.html.not_censored.turn_formatter.author_date_header"/>
+                <ref bean="format.html.censored.turn_formatter.author_date_header"/>
+            </list>
+        </constructor-arg>
+        <constructor-arg ref="print.file_sender"/>
+        <constructor-arg ref="group.grouped_message_retriever.all"/>
+    </bean>
+
+    <bean id="printDetailNew.event_handler"
+          class="bot.print.PrintEventHandler">
+        <constructor-arg value="${command.printDetailNew}"/>
+        <constructor-arg>
+            <list>
+                <ref bean="format.html.not_censored.turn_formatter.author_date_header"/>
+                <ref bean="format.html.censored.turn_formatter.author_date_header"/>
             </list>
         </constructor-arg>
         <constructor-arg ref="print.file_sender"/>

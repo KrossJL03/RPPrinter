@@ -8,7 +8,7 @@
     <import resource="format-html.xml"/>
 
     <!-- TURN FORMATTER -->
-    <bean id="format.html.censored.turn_formatter"
+    <bean id="format.html.censored.turn_formatter.author_date_header"
           class="bot.format.TurnFormatter">
         <constructor-arg value="censored"/>
         <constructor-arg ref="format.html.format"/>
@@ -16,7 +16,22 @@
         <constructor-arg ref="format.html.censored.text_formatter"/>
         <constructor-arg value="&#xA;&lt;hr/&gt;&#xA;"/>
         <constructor-arg ref="format.html.censored.text_cleaner"/>
+        <constructor-arg ref="format.html.censored.header_generator.author_date"/>
     </bean>
+    <bean id="format.html.censored.turn_formatter.null_header"
+          class="bot.format.TurnFormatter">
+        <constructor-arg value="censored"/>
+        <constructor-arg ref="format.html.format"/>
+        <constructor-arg ref="format.html.censored.text_censorer"/>
+        <constructor-arg ref="format.html.censored.text_formatter"/>
+        <constructor-arg value="&#xA;&lt;hr/&gt;&#xA;"/>
+        <constructor-arg ref="format.html.censored.text_cleaner"/>
+        <constructor-arg ref="format.html.censored.header_generator.null"/>
+    </bean>
+
+    <!-- HEADER GENERATORS -->
+    <bean id="format.html.censored.header_generator.author_date" class="bot.format.AuthorDateHeaderGenerator"/>
+    <bean id="format.html.censored.header_generator.null" class="bot.format.NullHeaderGenerator"/>
 
     <!-- TEXT CENSORER -->
     <bean id="format.html.censored.text_censorer"
@@ -47,6 +62,8 @@
             <list>
                 <ref bean="format.html.text_replacer.newline"/>
                 <ref bean="format.html.censored.text_replacer.code_span"/>
+                <ref bean="format.html.text_replacer.user_tag"/>
+                <ref bean="format.html.text_replacer.multiple_spaces"/>
             </list>
         </constructor-arg>
     </bean>

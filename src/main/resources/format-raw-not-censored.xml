@@ -8,28 +8,32 @@
     <import resource="format-raw.xml"/>
 
     <!-- TURN FORMATTER -->
-    <bean id="format.raw.full.turn_formatter"
+    <bean id="format.raw.not_censored.turn_formatter"
           class="bot.format.TurnFormatter">
-        <constructor-arg value="full"/>
+        <constructor-arg value="not-censored"/>
         <constructor-arg ref="format.raw.format"/>
-        <constructor-arg ref="format.raw.full.text_censorer"/>
-        <constructor-arg ref="format.raw.full.text_formatter"/>
+        <constructor-arg ref="format.raw.not_censored.text_censorer"/>
+        <constructor-arg ref="format.raw.not_censored.text_formatter"/>
         <constructor-arg value=" "/>
-        <constructor-arg ref="format.raw.full.text_cleaner"/>
+        <constructor-arg ref="format.raw.not_censored.text_cleaner"/>
+        <constructor-arg ref="format.raw.not_censored.header_generator.null"/>
     </bean>
 
+    <!-- HEADER GENERATORS -->
+    <bean id="format.raw.not_censored.header_generator.null" class="bot.format.NullHeaderGenerator"/>
+
     <!-- TEXT CENSORER -->
-    <bean id="format.raw.full.text_censorer"
+    <bean id="format.raw.not_censored.text_censorer"
           class="bot.format.TextCensorer">
         <constructor-arg>
             <list>
-                <ref bean="format.raw.full.style_tracker.code_span"/>
+                <ref bean="format.raw.not_censored.style_tracker.code_span"/>
             </list>
         </constructor-arg>
     </bean>
 
     <!-- TEXT FORMATTER -->
-    <bean id="format.raw.full.text_formatter"
+    <bean id="format.raw.not_censored.text_formatter"
           class="bot.format.TextFormatter">
         <constructor-arg>
             <list/>
@@ -38,29 +42,30 @@
     </bean>
 
     <!-- TEXT CLEANER -->
-    <bean id="format.raw.full.text_cleaner" class="bot.format.TextCleaner">
+    <bean id="format.raw.not_censored.text_cleaner" class="bot.format.TextCleaner">
         <constructor-arg>
             <list>
-                <ref bean="format.raw.full.text_replacer.censor"/>
+                <ref bean="format.raw.not_censored.text_replacer.censor"/>
                 <ref bean="format.raw.text_replacer.period"/>
                 <ref bean="format.raw.text_replacer.comma"/>
                 <ref bean="format.raw.text_replacer.quote"/>
                 <ref bean="format.raw.text_replacer.left_quote"/>
                 <ref bean="format.raw.text_replacer.right_quote"/>
                 <ref bean="format.raw.text_replacer.star"/>
+                <ref bean="format.raw.text_replacer.user_tag"/>
                 <ref bean="format.raw.text_replacer.multiple_spaces"/>
             </list>
         </constructor-arg>
     </bean>
 
     <!-- TEXT REPLACERS -->
-    <bean id="format.raw.full.text_replacer.censor" class="bot.format.TextReplacer">
+    <bean id="format.raw.not_censored.text_replacer.censor" class="bot.format.TextReplacer">
         <constructor-arg value="&#x5c;&#x7c;&#x5c;&#x7c;"/>
         <constructor-arg value=" "/>
     </bean>
 
     <!-- STYLE TRACKER -->
-    <bean id="format.raw.full.style_tracker.code_span"
+    <bean id="format.raw.not_censored.style_tracker.code_span"
           class="bot.format.StyleTracker">
         <constructor-arg ref="format.html.style.code_span"/>
     </bean>

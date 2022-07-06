@@ -34,6 +34,18 @@
     <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
         <property name="targetObject" ref="jda_builder"/>
         <property name="targetMethod" value="addEventListeners"/>
+        <property name="arguments" ref="printDetail.event_listener"/>
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="jda_builder"/>
+        <property name="targetMethod" value="addEventListeners"/>
+        <property name="arguments" ref="printDetailNew.event_listener"/>
+    </bean>
+
+    <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" ref="jda_builder"/>
+        <property name="targetMethod" value="addEventListeners"/>
         <property name="arguments" ref="stats.event_listener"/>
     </bean>
 

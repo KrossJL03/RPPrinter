@@ -9,24 +9,32 @@ import java.time.OffsetDateTime;
  */
 public class GroupedMessage implements Turn
 {
+    private String         author;
     private String         message;
     private OffsetDateTime postedAt;
 
-    GroupedMessage(String message, OffsetDateTime postedAt)
+    GroupedMessage(String message, OffsetDateTime postedAt, String author)
     {
         this.message = message;
         this.postedAt = postedAt;
+        this.author = author;
+    }
+
+    @Override
+    public String getAuthor()
+    {
+        return author;
+    }
+
+    @Override
+    public String getMessage()
+    {
+        return message;
     }
 
     @Override
     public OffsetDateTime getPostedAt()
     {
         return postedAt;
-    }
-
-    @Override
-    public String toString()
-    {
-        return message;
     }
 }

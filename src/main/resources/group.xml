@@ -45,6 +45,8 @@
             <list>
                 <value>${command.print}</value>
                 <value>${command.printNew}</value>
+                <value>${command.printDetail}</value>
+                <value>${command.printDetailNew}</value>
             </list>
         </constructor-arg>
     </bean>
@@ -55,6 +57,8 @@
             <list>
                 <value>${command.print}</value>
                 <value>${command.printNew}</value>
+                <value>${command.printDetail}</value>
+                <value>${command.printDetailNew}</value>
                 <value>${command.stats}</value>
             </list>
         </constructor-arg>

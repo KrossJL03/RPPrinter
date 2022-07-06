@@ -45,7 +45,13 @@ class MessageGrouper
             stringBuilder.append(message.getContentRaw());
 
             if (stringBuilder.length() > 0 && (messageQueue.isEmpty() || !isSameAuthor(message, messageQueue.peek()))) {
-                groupedMessageList.add(new GroupedMessage(stringBuilder.toString(), postedAt));
+                groupedMessageList.add(
+                    new GroupedMessage(
+                        stringBuilder.toString(),
+                        postedAt,
+                        message.getAuthor().getName()
+                    )
+                );
 
                 stringBuilder = new StringBuilder();
                 postedAt = null;
